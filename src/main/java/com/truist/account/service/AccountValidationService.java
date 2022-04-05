@@ -23,10 +23,10 @@ public class AccountValidationService {
         this.accountRepository = accountRepository;
     }
 
-	public Account doValidate(Account account) throws NoSuchAccountException {
-		Optional<Account> optionalBankAccount = accountRepository.findById(account.getAccountNumber());
+	public Account doValidate(long account) throws NoSuchAccountException {
+		Optional<Account> optionalBankAccount = accountRepository.findById(account);
         if(!optionalBankAccount.isPresent()){
-            throw new NoSuchAccountException(": "+ account.getAccountNumber());
+            throw new NoSuchAccountException(": "+ account);
         }
 		return optionalBankAccount.get();
 	

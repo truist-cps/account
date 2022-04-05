@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
+import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -12,19 +12,16 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.truist.account.model.TransferRequest;
-
 @Configuration
 public class AccountConfig {
 
 	@Bean
-    public ProducerFactory<String, TransferRequest>
+    public ProducerFactory<Integer, String>
     producerFactory()
     {
         // Create a map of a string
         // and object
-        Map<String, Object> config
-            = new HashMap<>();
+        Map<String, Object> config = new HashMap<>();
   
         config.put(
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
@@ -32,7 +29,7 @@ public class AccountConfig {
   
         config.put(
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-            StringSerializer.class);
+            IntegerSerializer.class);
   
         config.put(
             ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
@@ -42,10 +39,8 @@ public class AccountConfig {
     }
 	
 	@Bean
-    public KafkaTemplate<String, TransferRequest>
-    kafkaTemplate()
+    public KafkaTemplate<Integer, String> kafkaTemplate()
     {
-        return new KafkaTemplate<>(
-            producerFactory());
+        return new KafkaTemplate<>(producerFactory());
     }
 }

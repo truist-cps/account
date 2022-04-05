@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.truist.account.model.Model;
 import com.truist.account.model.NoSuchAccountException;
 import com.truist.account.model.ResponseModel;
-import com.truist.account.model.TransferRequest;
 import com.truist.account.service.AccountValidationService;
 
 @RestController
@@ -27,10 +28,10 @@ public class MainController {
 	}
 	
     @PostMapping("/fund-transfer")
-    private ResponseEntity<?> initTransfer(@RequestBody TransferRequest transactionRequest) {
+    private ResponseEntity<?> initTransfer(@RequestBody Model transactionRequest) throws JsonProcessingException {
     	ResponseModel responseModel=new ResponseModel();
 		try {
-			accountValidationService.doValidate(transactionRequest.getDebitAccount());
+			accountValidationService.doValidate(transactionRequest.getSourceAccountNumber());
 		}catch (NoSuchAccountException e) {
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, "Account not found",e);
@@ -40,7 +41,7 @@ public class MainController {
 		}
 		
 		try {
-			accountValidationService.doValidate(transactionRequest.getCreditAccount());
+			accountValidationService.doValidate(transactionRequest.getDestinationAccountNumber());
 			responseModel.setData(transactionRequest);
 	    	responseModel.setMessage("Success");
 		}catch (NoSuchAccountException e) {
