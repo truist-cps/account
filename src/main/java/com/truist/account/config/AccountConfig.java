@@ -15,7 +15,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @Configuration
 public class AccountConfig {
 
-	@Bean
+	/*@Bean
     public ProducerFactory<Integer, String>
     producerFactory()
     {
@@ -36,11 +36,11 @@ public class AccountConfig {
             JsonSerializer.class);
   
         return new DefaultKafkaProducerFactory<>(config);
-    }
+    }*/
 	
-	@Bean
+	/*@Bean
     public KafkaTemplate<Integer, String> kafkaTemplate()
     {
         return new KafkaTemplate<>(producerFactory());
-    }
+    }*/
 }
