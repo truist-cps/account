@@ -43,7 +43,7 @@ public class MainController {
 		try {
 			accountValidationService.doValidate(transactionRequest.getDestinationAccountNumber());
 			responseModel.setData(transactionRequest);
-	    	responseModel.setMessage("Success");
+	    	responseModel.setMessage("Both Accounts are present");
 		}catch (NoSuchAccountException e) {
 			throw new ResponseStatusException(
 			          HttpStatus.NOT_FOUND, "Account not found",e);

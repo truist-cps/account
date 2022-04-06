@@ -55,9 +55,9 @@ public class Outbound {
 	    
 	    private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value, String topic) {
 
-	        List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
+	       // List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()));
 
-	        return new ProducerRecord<>(topic, null, key, value, recordHeaders);
+	        return new ProducerRecord<>(topic, null, key, value, null);
 	    }
 	    
 	    private void handleFailure(Integer key, String value, Throwable ex) {
